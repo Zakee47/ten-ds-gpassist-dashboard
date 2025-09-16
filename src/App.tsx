@@ -7,9 +7,6 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { AppSidebar } from "./components/AppSidebar";
 import Index from "./pages/Index";
-import PatientPortal from "./pages/PatientPortal";
-import MedicalReview from "./pages/MedicalReview";
-import AdminRequest from "./pages/AdminRequest";
 import ClinicianPortal from "./pages/ClinicianPortal";
 import NotFound from "./pages/NotFound";
 
@@ -31,9 +28,6 @@ const App = () => (
               <main className="flex-1">
                 <Routes>
                   <Route path="/" element={<Index />} />
-                  <Route path="/patient-portal" element={<PatientPortal />} />
-                  <Route path="/patient-portal/medical-review" element={<MedicalReview />} />
-                  <Route path="/patient-portal/admin-request" element={<AdminRequest />} />
                   <Route path="/clinician-portal" element={<ClinicianPortal />} />
                   {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
                   <Route path="*" element={<NotFound />} />

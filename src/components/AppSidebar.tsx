@@ -1,21 +1,10 @@
-import { Home, User, Settings, Hospital, Phone, ChevronDown } from "lucide-react";
+import { Home, User, Settings, Phone } from "lucide-react";
 import { NavLink, useLocation } from "react-router-dom";
-import { Sidebar, SidebarContent, SidebarFooter, SidebarGroup, SidebarGroupContent, SidebarGroupLabel, SidebarMenu, SidebarMenuButton, SidebarMenuItem, SidebarMenuSub, SidebarMenuSubButton, SidebarMenuSubItem, useSidebar } from "@/components/ui/sidebar";
-import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
+import { Sidebar, SidebarContent, SidebarFooter, SidebarGroup, SidebarGroupContent, SidebarGroupLabel, SidebarMenu, SidebarMenuButton, SidebarMenuItem, useSidebar } from "@/components/ui/sidebar";
 const navigationItems = [{
   title: "Home",
   url: "/",
   icon: Home
-}, {
-  title: "Patient Portal",
-  icon: Hospital,
-  subItems: [{
-    title: "Medical Review",
-    url: "/patient-portal/medical-review"
-  }, {
-    title: "Admin Request",
-    url: "/patient-portal/admin-request"
-  }]
 }, {
   title: "Clinician Portal",
   url: "/clinician-portal",
@@ -36,7 +25,7 @@ export function AppSidebar() {
   const location = useLocation();
   const currentPath = location.pathname;
   const isActive = (path: string) => currentPath === path;
-  const isPatientPortalActive = currentPath.startsWith('/patient-portal');
+  
   return <Sidebar className="border-r">
       <SidebarContent>
         <SidebarGroup>
@@ -44,31 +33,12 @@ export function AppSidebar() {
           <SidebarGroupContent>
             <SidebarMenu>
               {navigationItems.map(item => <SidebarMenuItem key={item.title}>
-                  {item.subItems ? <Collapsible defaultOpen={isPatientPortalActive}>
-                      <CollapsibleTrigger asChild>
-                        <SidebarMenuButton size="lg" className="flex items-center gap-3 text-base">
-                          <item.icon className="h-9 w-5 " />
-                          <span className="text-base">{item.title}</span>
-                          <ChevronDown className="ml-auto h-4 w-4 transition-transform duration-200 group-data-[state=open]/collapsible:rotate-180" />
-                        </SidebarMenuButton>
-                      </CollapsibleTrigger>
-                      <CollapsibleContent>
-                        <SidebarMenuSub>
-                          {item.subItems.map(subItem => <SidebarMenuSubItem key={subItem.title}>
-                              <SidebarMenuSubButton asChild isActive={isActive(subItem.url)}>
-                                <NavLink to={subItem.url} className="text-base">
-                                  {subItem.title}
-                                </NavLink>
-                              </SidebarMenuSubButton>
-                            </SidebarMenuSubItem>)}
-                        </SidebarMenuSub>
-                      </CollapsibleContent>
-                    </Collapsible> : <SidebarMenuButton asChild isActive={isActive(item.url)} size="lg">
-                      <NavLink to={item.url} className="flex items-center gap-3 text-base">
-                        <item.icon className="h-9 w-5" />
-                        <span className="text-base">{item.title}</span>
-                      </NavLink>
-                    </SidebarMenuButton>}
+                  <SidebarMenuButton asChild isActive={isActive(item.url)} size="lg">
+                    <NavLink to={item.url} className="flex items-center gap-3 text-base">
+                      <item.icon className="h-9 w-5" />
+                      <span className="text-base">{item.title}</span>
+                    </NavLink>
+                  </SidebarMenuButton>
                 </SidebarMenuItem>)}
             </SidebarMenu>
           </SidebarGroupContent>
