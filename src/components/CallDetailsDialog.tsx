@@ -1,0 +1,215 @@
+import React, { useState } from 'react';
+import { Phone, User, Calendar, Clock, Edit3, CheckCircle, XCircle, ChevronDown } from 'lucide-react';
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
+import { Textarea } from '@/components/ui/textarea';
+import { ScrollArea } from '@/components/ui/scroll-area';
+import { CallLog } from '@/types/call-log';
+import { getPriorityIcon, getStatusIcon, getStatusBadge } from '@/utils/call-log-utils';
+
+interface CallDetailsDialogProps {
+  call: CallLog | null;
+  isOpen: boolean;
+  onClose: () => void;
+  onUpdatePriority: (callId: string, priority: 'high' | 'medium' | 'low' | 'pending' | 'none') => void;
+  onUpdateStatus: (callId: string, status: 'completed' | 'dropped' | 'pending') => void;
+}
+
+export const CallDetailsDialog: React.FC<CallDetailsDialogProps> = ({
+  call,
+  isOpen,
+  onClose,
+  onUpdatePriority,
+  onUpdateStatus
+}) => {
+  const [isEditingPriority, setIsEditingPriority] = useState(false);
+  const [isEditingStatus, setIsEditingStatus] = useState(false);
+  const [isTranscriptCollapsed, setIsTranscriptCollapsed] = useState(true);
+
+  const handleUpdatePriority = (callId: string, newPriority: 'high' | 'medium' | 'low' | 'pending' | 'none') => {
+    onUpdatePriority(callId, newPriority);
+    setIsEditingPriority(false);
+  };
+
+  const handleUpdateStatus = (callId: string, newStatus: 'completed' | 'dropped' | 'pending') => {
+    onUpdateStatus(callId, newStatus);
+    setIsEditingStatus(false);
+  };
+
+  if (!call) return null;
+
+  return <Dialog open={isOpen} onOpenChange={onClose}>
+      <DialogContent className="max-w-4xl max-h-[80vh] overflow-y-auto">
+        <DialogHeader>
+          <DialogTitle className="flex items-center gap-2">
+            <Phone className="h-5 w-5" />
+            Call Details - {call.patientName}
+          </DialogTitle>
+        </DialogHeader>
+        
+        <div className="space-y-6">
+          {/* Call Overview */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <Card>
+              <CardHeader className="pb-2">
+                <CardTitle className="text-sm font-medium text-gray-600">Patient Information</CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-2">
+                <div className="flex items-center gap-2">
+                  <User className="h-4 w-4 text-gray-500" />
+                  <span className="font-medium">{call.patientName}</span>
+                </div>
+                
+                <div className="text-sm text-gray-600">
+                  Date of Birth: {call.dateOfBirth}
+                </div>
+                
+                <div className="text-sm text-gray-600">
+                  Caller: 1
+                </div>
+              </CardContent>
+            </Card>
+            
+            <Card>
+              <CardHeader className="pb-2">
+                <CardTitle className="text-sm font-medium text-gray-600">Call Information</CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-2">
+                <div className="flex items-center gap-2">
+                  <Calendar className="h-4 w-4 text-gray-500" />
+                  <span>{call.timestamp}</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <Clock className="h-4 w-4 text-gray-500" />
+                  <span>{call.duration}</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  {getStatusIcon(call.status)}
+                  {getStatusBadge(call.status)}
+                  {!isEditingStatus ? <Button variant="ghost" size="sm" onClick={() => setIsEditingStatus(true)} className="ml-2 h-6 px-2">
+                      <Edit3 className="h-3 w-3" />
+                    </Button> : <Select value={call.status} onValueChange={(value: 'completed' | 'dropped' | 'pending') => handleUpdateStatus(call.id, value)}>
+                      <SelectTrigger className="ml-2 h-6 w-32">
+                        <SelectValue />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="completed">
+                          <div className="flex items-center gap-2">
+                            <CheckCircle className="w-4 h-4 text-green-600" />
+                            Completed
+                          </div>
+                        </SelectItem>
+                        <SelectItem value="dropped">
+                          <div className="flex items-center gap-2">
+                            <XCircle className="w-4 h-4 text-red-600" />
+                            Dropped
+                          </div>
+                        </SelectItem>
+                        <SelectItem value="pending">
+                          <div className="flex items-center gap-2">
+                            <Clock className="w-4 h-4 text-yellow-600" />
+                            Pending
+                          </div>
+                        </SelectItem>
+                      </SelectContent>
+                    </Select>}
+                </div>
+                <div className="flex items-center gap-2">
+                  {getPriorityIcon(call.priority)}
+                  <span className="capitalize">{call.priority} Priority</span>
+                  {!isEditingPriority ? <Button variant="ghost" size="sm" onClick={() => setIsEditingPriority(true)} className="ml-2 h-6 px-2">
+                      <Edit3 className="h-3 w-3" />
+                    </Button> : <Select value={call.priority} onValueChange={(value: 'high' | 'medium' | 'low' | 'pending' | 'none') => handleUpdatePriority(call.id, value)}>
+                      <SelectTrigger className="ml-2 h-6 w-32">
+                        <SelectValue />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="high">
+                          <div className="flex items-center gap-2">
+                            <div className="w-3 h-3 bg-red-500 rounded-full" />
+                            High
+                          </div>
+                        </SelectItem>
+                        <SelectItem value="medium">
+                          <div className="flex items-center gap-2">
+                            <div className="w-3 h-3 bg-yellow-500 rounded-full" />
+                            Medium
+                          </div>
+                        </SelectItem>
+                        <SelectItem value="low">
+                          <div className="flex items-center gap-2">
+                            <div className="w-3 h-3 bg-green-500 rounded-full" />
+                            Low
+                          </div>
+                        </SelectItem>
+                        <SelectItem value="pending">
+                          <div className="flex items-center gap-2">
+                            <div className="w-3 h-3 bg-gray-500 rounded-full" />
+                            Pending
+                          </div>
+                        </SelectItem>
+                        <SelectItem value="none">
+                          <div className="flex items-center gap-2">
+                            <div className="w-3 h-3 bg-black rounded-full" />
+                            None
+                          </div>
+                        </SelectItem>
+                      </SelectContent>
+                    </Select>}
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+
+          {/* Call Summary */}
+          <Card>
+            <CardHeader>
+              <CardTitle className="text-lg">Call Summary</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <ScrollArea className="max-h-32">
+                <p className="text-gray-700 pr-4">{call.summary}</p>
+              </ScrollArea>
+            </CardContent>
+          </Card>
+
+          {/* Clinical Symptoms */}
+          {call.symptoms.length > 0 && <Card>
+              <CardHeader>
+                <CardTitle className="text-lg">Clinical Symptoms</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <p className="text-gray-700">{call.symptoms.join(', ')}</p>
+              </CardContent>
+            </Card>}
+
+          {/* Call Transcript */}
+          <Collapsible open={!isTranscriptCollapsed} onOpenChange={open => setIsTranscriptCollapsed(!open)}>
+            <Card>
+              <CardHeader>
+                <CollapsibleTrigger asChild>
+                  <Button variant="ghost" className="w-full justify-between p-0 h-auto">
+                    <CardTitle className="text-lg">Call Transcript</CardTitle>
+                    <ChevronDown className={`h-4 w-4 transition-transform duration-200 ${isTranscriptCollapsed ? '' : 'rotate-180'}`} />
+                  </Button>
+                </CollapsibleTrigger>
+              </CardHeader>
+              <CollapsibleContent>
+                <CardContent>
+                  <div className="bg-gray-50 p-4 rounded-lg">
+                    <pre className="whitespace-pre-wrap text-sm text-gray-700 font-mono">
+                      {call.transcript}
+                    </pre>
+                  </div>
+                </CardContent>
+              </CollapsibleContent>
+            </Card>
+          </Collapsible>
+        </div>
+      </DialogContent>
+    </Dialog>;
+};
