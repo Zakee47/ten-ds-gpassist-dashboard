@@ -172,7 +172,7 @@ const MedicalRequestForm: React.FC<MedicalRequestFormProps> = ({ onContinue, onB
               : 'bg-gray-300 text-gray-500 cursor-not-allowed'
           }`}
         >
-          Continue
+          Submit
         </Button>
       </div>
     </div>
