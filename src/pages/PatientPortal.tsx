@@ -5,7 +5,7 @@ import PatientDetailsForm from '@/components/PatientDetailsForm';
 import AIWidgetPlaceholder from '@/components/AIWidgetPlaceholder';
 import ThankYouPage from '@/components/ThankYouPage';
 
-type PatientPortalStep = 'identification' | 'emergency' | 'details' | 'medical' | 'confirmation';
+type PatientPortalStep = 'identification' | 'emergency' | 'details' | 'confirmation';
 
 const PatientPortal = () => {
   const [currentStep, setCurrentStep] = useState<PatientPortalStep>('identification');
@@ -20,9 +20,6 @@ const PatientPortal = () => {
         setCurrentStep('details');
         break;
       case 'details':
-        setCurrentStep('medical');
-        break;
-      case 'medical':
         setCurrentStep('confirmation');
         break;
     }
@@ -36,11 +33,8 @@ const PatientPortal = () => {
       case 'details':
         setCurrentStep('emergency');
         break;
-      case 'medical':
-        setCurrentStep('details');
-        break;
       case 'confirmation':
-        setCurrentStep('medical');
+        setCurrentStep('details');
         break;
     }
   };
@@ -50,8 +44,7 @@ const PatientPortal = () => {
       case 'identification': return 1;
       case 'emergency': return 2;
       case 'details': return 3;
-      case 'medical': return 4;
-      case 'confirmation': return 4;
+      case 'confirmation': return 3;
       default: return 1;
     }
   };
@@ -68,7 +61,7 @@ const PatientPortal = () => {
             
             {/* Progress Steps */}
             <div className="flex justify-center items-center gap-4 mb-8">
-              {[1, 2, 3, 4].map((step) => (
+              {[1, 2, 3].map((step) => (
                 <div key={step} className="flex items-center">
                   <div className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-semibold ${
                     step <= getCurrentStepNumber() 
@@ -77,7 +70,7 @@ const PatientPortal = () => {
                   }`}>
                     {step}
                   </div>
-                  {step < 4 && <div className="w-8 h-0.5 bg-gray-300 mx-2" />}
+                  {step < 3 && <div className="w-8 h-0.5 bg-gray-300 mx-2" />}
                 </div>
               ))}
             </div>
@@ -99,13 +92,6 @@ const PatientPortal = () => {
             
             {currentStep === 'details' && (
               <PatientDetailsForm 
-                onContinue={handleNext} 
-                onBack={handleBack}
-              />
-            )}
-            
-            {currentStep === 'medical' && (
-              <AIWidgetPlaceholder 
                 onContinue={handleNext} 
                 onBack={handleBack}
               />
