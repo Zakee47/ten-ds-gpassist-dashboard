@@ -173,7 +173,7 @@ export const CallDetailsDialog: React.FC<CallDetailsDialogProps> = ({
               <CardContent>
                 <div className="flex flex-wrap gap-2">
                   {call.symptoms.map((symptom, index) => (
-                    <Badge key={index} variant="secondary" className="bg-blue-50 text-blue-700 border-blue-200">
+                    <Badge key={index} variant="secondary" className="bg-blue-50 text-blue-700 border-blue-200 px-3 py-1 text-sm">
                       {symptom}
                     </Badge>
                   ))}
