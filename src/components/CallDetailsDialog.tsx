@@ -175,40 +175,36 @@ export const CallDetailsDialog: React.FC<CallDetailsDialogProps> = ({
               </CardContent>
             </Card>}
 
-          {/* Call Summary */}
-          <Card>
-            <CardHeader>
-              <CardTitle className="text-lg">Call Summary</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <ScrollArea className="max-h-32">
-                <p className="text-gray-700 pr-4">{call.summary}</p>
-              </ScrollArea>
-            </CardContent>
-          </Card>
-
-          {/* Call Transcript */}
-          <Collapsible open={!isTranscriptCollapsed} onOpenChange={open => setIsTranscriptCollapsed(!open)}>
+          {/* Call Summary and Transcript Side by Side */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            {/* Call Summary */}
             <Card>
               <CardHeader>
-                <CollapsibleTrigger asChild>
-                  <Button variant="ghost" className="w-full justify-between p-0 h-auto">
-                    <CardTitle className="text-lg">Call Transcript</CardTitle>
-                    <ChevronDown className={`h-4 w-4 transition-transform duration-200 ${isTranscriptCollapsed ? '' : 'rotate-180'}`} />
-                  </Button>
-                </CollapsibleTrigger>
+                <CardTitle className="text-lg">Call Summary</CardTitle>
               </CardHeader>
-              <CollapsibleContent>
-                <CardContent>
+              <CardContent>
+                <ScrollArea className="max-h-96">
+                  <p className="text-gray-700 pr-4">{call.summary}</p>
+                </ScrollArea>
+              </CardContent>
+            </Card>
+
+            {/* Call Transcript */}
+            <Card>
+              <CardHeader>
+                <CardTitle className="text-lg">Call Transcript</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <ScrollArea className="max-h-96">
                   <div className="bg-gray-50 p-4 rounded-lg">
                     <pre className="whitespace-pre-wrap text-sm text-gray-700 font-mono">
                       {call.transcript}
                     </pre>
                   </div>
-                </CardContent>
-              </CollapsibleContent>
+                </ScrollArea>
+              </CardContent>
             </Card>
-          </Collapsible>
+          </div>
         </div>
       </DialogContent>
     </Dialog>;
