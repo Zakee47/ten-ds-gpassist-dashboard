@@ -1,10 +1,14 @@
-import { Home, User, Settings, Phone } from "lucide-react";
+import { Home, User, Settings, Phone, Heart } from "lucide-react";
 import { NavLink, useLocation } from "react-router-dom";
 import { Sidebar, SidebarContent, SidebarFooter, SidebarGroup, SidebarGroupContent, SidebarGroupLabel, SidebarMenu, SidebarMenuButton, SidebarMenuItem, useSidebar } from "@/components/ui/sidebar";
 const navigationItems = [{
   title: "Home",
   url: "/",
   icon: Home
+}, {
+  title: "Patient Portal",
+  url: "/patient-portal",
+  icon: Heart
 }, {
   title: "Clinician Portal",
   url: "/clinician-portal",
