@@ -171,7 +171,13 @@ export const CallDetailsDialog: React.FC<CallDetailsDialogProps> = ({
                 <CardTitle className="text-lg">Clinical Symptoms</CardTitle>
               </CardHeader>
               <CardContent>
-                <p className="text-gray-700">{call.symptoms.join(', ')}</p>
+                <div className="flex flex-wrap gap-2">
+                  {call.symptoms.map((symptom, index) => (
+                    <Badge key={index} variant="secondary" className="bg-blue-50 text-blue-700 border-blue-200">
+                      {symptom}
+                    </Badge>
+                  ))}
+                </div>
               </CardContent>
             </Card>}
 
