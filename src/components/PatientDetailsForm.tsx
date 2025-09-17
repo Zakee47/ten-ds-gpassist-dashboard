@@ -34,13 +34,8 @@ const PatientDetailsForm: React.FC<PatientDetailsFormProps> = ({ onContinue, onB
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    // Basic validation
-    if (firstName && lastName && day && month && year && phoneNumber && (contactPreferences.textMessage || contactPreferences.phoneCall)) {
-      onContinue();
-    }
+    onContinue();
   };
-
-  const isFormValid = firstName && lastName && day && month && year && phoneNumber && (contactPreferences.textMessage || contactPreferences.phoneCall);
 
   return (
     <div className="p-8 md:p-12">
@@ -158,7 +153,6 @@ const PatientDetailsForm: React.FC<PatientDetailsFormProps> = ({ onContinue, onB
           </Button>
           <Button
             type="submit"
-            disabled={!isFormValid}
             className={`px-8 ${buttonGradient}`}
           >
             Continue
