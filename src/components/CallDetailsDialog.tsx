@@ -186,6 +186,12 @@ export const CallDetailsDialog: React.FC<CallDetailsDialogProps> = ({
                   Based on the reported symptoms and call context, this case has been flagged as high urgency due to potential emergency indicators requiring immediate medical attention.
                 </p>
               </div>
+              <div>
+                <h4 className="text-sm font-medium text-muted-foreground mb-2">Optimal Care Pathway</h4>
+                <p className="text-sm text-muted-foreground bg-muted/50 p-3 rounded-lg">
+                  Recommended immediate escalation to emergency services. Patient should be advised to call 999 or attend A&E immediately. Follow-up required within 24 hours if symptoms persist or worsen.
+                </p>
+              </div>
             </CardContent>
           </Card>
 
