@@ -165,6 +165,30 @@ export const CallDetailsDialog: React.FC<CallDetailsDialogProps> = ({
             </Card>
           </div>
 
+          {/* AI Insights */}
+          <Card>
+            <CardHeader>
+              <CardTitle className="text-lg">AI Insights</CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              <div>
+                <h4 className="text-sm font-medium text-muted-foreground mb-2">Urgency Assessment</h4>
+                <div className="flex items-center gap-3">
+                  <div className="flex items-center gap-2">
+                    <div className="w-4 h-4 bg-red-500 rounded-full"></div>
+                    <span className="text-sm font-medium">High Urgency</span>
+                  </div>
+                </div>
+              </div>
+              <div>
+                <h4 className="text-sm font-medium text-muted-foreground mb-2">Assessment Reasoning</h4>
+                <p className="text-sm text-muted-foreground bg-muted/50 p-3 rounded-lg">
+                  Based on the reported symptoms and call context, this case has been flagged as high urgency due to potential emergency indicators requiring immediate medical attention.
+                </p>
+              </div>
+            </CardContent>
+          </Card>
+
           {/* Clinical Symptoms */}
           {call.symptoms.length > 0 && <Card>
               <CardHeader>
