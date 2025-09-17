@@ -17,7 +17,7 @@ export const CallLogsTable: React.FC<CallLogsTableProps> = ({ calls, onCallSelec
       <Table>
         <TableHeader>
           <TableRow>
-            <TableHead className="w-[60px]">Priority</TableHead>
+            <TableHead className="w-[60px]">Urgency</TableHead>
             <TableHead>Patient Name</TableHead>
             <TableHead>Date of Birth</TableHead>
             <TableHead>Caller ID</TableHead>

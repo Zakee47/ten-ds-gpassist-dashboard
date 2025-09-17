@@ -120,7 +120,7 @@ export const CallDetailsDialog: React.FC<CallDetailsDialogProps> = ({
                 </div>
                 <div className="flex items-center gap-2">
                   {getPriorityIcon(call.priority)}
-                  <span className="capitalize">{call.priority} Priority</span>
+                  <span className="capitalize">{call.priority} Urgency</span>
                   {!isEditingPriority ? <Button variant="ghost" size="sm" onClick={() => setIsEditingPriority(true)} className="ml-2 h-6 px-2">
                       <Edit3 className="h-3 w-3" />
                     </Button> : <Select value={call.priority} onValueChange={(value: 'high' | 'medium' | 'low' | 'pending' | 'none') => handleUpdatePriority(call.id, value)}>
