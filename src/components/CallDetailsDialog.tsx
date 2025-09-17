@@ -110,10 +110,6 @@ export const CallDetailsDialog: React.FC<CallDetailsDialogProps> = ({
                       </SelectContent>
                     </Select>}
                 </div>
-                <div className="flex items-center gap-2">
-                  {getPriorityIcon(call.priority)}
-                  <span className="capitalize">{call.priority} Urgency</span>
-                </div>
               </CardContent>
             </Card>
           </div>
