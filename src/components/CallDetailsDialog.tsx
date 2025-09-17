@@ -171,21 +171,24 @@ export const CallDetailsDialog: React.FC<CallDetailsDialogProps> = ({
               <CardTitle className="text-lg">Call Summary</CardTitle>
             </CardHeader>
             <CardContent>
+              {/* Clinical Symptoms as tags */}
+              {call.symptoms.length > 0 && (
+                <div className="mb-4">
+                  <h4 className="text-sm font-medium text-gray-600 mb-2">Clinical Symptoms</h4>
+                  <div className="flex flex-wrap gap-2">
+                    {call.symptoms.map((symptom, index) => (
+                      <Badge key={index} variant="secondary" className="bg-blue-100 text-blue-800">
+                        {symptom}
+                      </Badge>
+                    ))}
+                  </div>
+                </div>
+              )}
               <ScrollArea className="max-h-32">
                 <p className="text-gray-700 pr-4">{call.summary}</p>
               </ScrollArea>
             </CardContent>
           </Card>
-
-          {/* Clinical Symptoms */}
-          {call.symptoms.length > 0 && <Card>
-              <CardHeader>
-                <CardTitle className="text-lg">Clinical Symptoms</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <p className="text-gray-700">{call.symptoms.join(', ')}</p>
-              </CardContent>
-            </Card>}
 
           {/* Call Transcript */}
           <Collapsible open={!isTranscriptCollapsed} onOpenChange={open => setIsTranscriptCollapsed(!open)}>
