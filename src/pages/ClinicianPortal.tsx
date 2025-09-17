@@ -89,7 +89,7 @@ const ClinicianPortal = () => {
           </CardContent>
         </Card>
 
-        <CallDetailsDialog call={selectedCall} isOpen={!!selectedCall} onClose={() => setSelectedCall(null)} onUpdateStatus={updateStatus} />
+        <CallDetailsDialog call={selectedCall} isOpen={!!selectedCall} onClose={() => setSelectedCall(null)} onUpdateStatus={updateStatus} onUpdateUrgency={updatePriority} />
       </div>
     </div>;
 };

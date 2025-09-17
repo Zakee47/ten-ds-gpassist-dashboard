@@ -16,20 +16,28 @@ interface CallDetailsDialogProps {
   isOpen: boolean;
   onClose: () => void;
   onUpdateStatus: (callId: string, status: 'completed' | 'dropped' | 'pending') => void;
+  onUpdateUrgency: (callId: string, urgency: 'high' | 'medium' | 'low') => void;
 }
 
 export const CallDetailsDialog: React.FC<CallDetailsDialogProps> = ({
   call,
   isOpen,
   onClose,
-  onUpdateStatus
+  onUpdateStatus,
+  onUpdateUrgency
 }) => {
   const [isEditingStatus, setIsEditingStatus] = useState(false);
+  const [isEditingUrgency, setIsEditingUrgency] = useState(false);
   const [isTranscriptCollapsed, setIsTranscriptCollapsed] = useState(true);
 
   const handleUpdateStatus = (callId: string, newStatus: 'completed' | 'dropped' | 'pending') => {
     onUpdateStatus(callId, newStatus);
     setIsEditingStatus(false);
+  };
+
+  const handleUpdateUrgency = (callId: string, newUrgency: 'high' | 'medium' | 'low') => {
+    onUpdateUrgency(callId, newUrgency);
+    setIsEditingUrgency(false);
   };
 
   if (!call) return null;
@@ -124,8 +132,32 @@ export const CallDetailsDialog: React.FC<CallDetailsDialogProps> = ({
                 <h4 className="text-sm font-medium text-muted-foreground mb-2">Urgency Assessment</h4>
                 <div className="flex items-center gap-3">
                   <div className="flex items-center gap-2">
-                    <div className="w-4 h-4 bg-red-500 rounded-full"></div>
-                    <span className="text-sm font-medium">High Urgency</span>
+                    {getPriorityIcon(call.priority || 'high')}
+                    <span className="text-sm font-medium capitalize">{call.priority || 'High'} Urgency</span>
+                    {!isEditingUrgency ? (
+                      <Button 
+                        variant="ghost" 
+                        size="sm" 
+                        onClick={() => setIsEditingUrgency(true)} 
+                        className="ml-2 h-6 px-2"
+                      >
+                        <Edit3 className="h-3 w-3" />
+                      </Button>
+                    ) : (
+                      <Select 
+                        value={call.priority || 'high'} 
+                        onValueChange={(value: 'high' | 'medium' | 'low') => handleUpdateUrgency(call.id, value)}
+                      >
+                        <SelectTrigger className="ml-2 h-6 w-32">
+                          <SelectValue />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="high">High</SelectItem>
+                          <SelectItem value="medium">Medium</SelectItem>
+                          <SelectItem value="low">Low</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    )}
                   </div>
                 </div>
               </div>
