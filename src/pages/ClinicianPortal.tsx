@@ -3,7 +3,7 @@ import { Phone } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { CallLog, mockCallLogs } from '@/types/call-log';
 import { SearchFilters } from '@/components/SearchFilters';
-import { CallLogsTable } from '@/components/CallLogsTable';
+import { UrgencyGroupedTable } from '@/components/UrgencyGroupedTable';
 import { CallDetailsDialog } from '@/components/CallDetailsDialog';
 const ClinicianPortal = () => {
   const [searchTerm, setSearchTerm] = useState('');
@@ -85,7 +85,7 @@ const ClinicianPortal = () => {
           </CardHeader>
           
           <CardContent>
-            <CallLogsTable calls={filteredCalls} onCallSelect={setSelectedCall} />
+            <UrgencyGroupedTable calls={filteredCalls} onCallSelect={setSelectedCall} />
           </CardContent>
         </Card>
 
