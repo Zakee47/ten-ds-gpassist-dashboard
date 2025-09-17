@@ -15,7 +15,6 @@ interface CallDetailsDialogProps {
   call: CallLog | null;
   isOpen: boolean;
   onClose: () => void;
-  onUpdatePriority: (callId: string, priority: 'high' | 'medium' | 'low' | 'pending' | 'none') => void;
   onUpdateStatus: (callId: string, status: 'completed' | 'dropped' | 'pending') => void;
 }
 
@@ -23,17 +22,10 @@ export const CallDetailsDialog: React.FC<CallDetailsDialogProps> = ({
   call,
   isOpen,
   onClose,
-  onUpdatePriority,
   onUpdateStatus
 }) => {
-  const [isEditingPriority, setIsEditingPriority] = useState(false);
   const [isEditingStatus, setIsEditingStatus] = useState(false);
   const [isTranscriptCollapsed, setIsTranscriptCollapsed] = useState(true);
-
-  const handleUpdatePriority = (callId: string, newPriority: 'high' | 'medium' | 'low' | 'pending' | 'none') => {
-    onUpdatePriority(callId, newPriority);
-    setIsEditingPriority(false);
-  };
 
   const handleUpdateStatus = (callId: string, newStatus: 'completed' | 'dropped' | 'pending') => {
     onUpdateStatus(callId, newStatus);
@@ -121,45 +113,6 @@ export const CallDetailsDialog: React.FC<CallDetailsDialogProps> = ({
                 <div className="flex items-center gap-2">
                   {getPriorityIcon(call.priority)}
                   <span className="capitalize">{call.priority} Urgency</span>
-                  {!isEditingPriority ? <Button variant="ghost" size="sm" onClick={() => setIsEditingPriority(true)} className="ml-2 h-6 px-2">
-                      <Edit3 className="h-3 w-3" />
-                    </Button> : <Select value={call.priority} onValueChange={(value: 'high' | 'medium' | 'low' | 'pending' | 'none') => handleUpdatePriority(call.id, value)}>
-                      <SelectTrigger className="ml-2 h-6 w-32">
-                        <SelectValue />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="high">
-                          <div className="flex items-center gap-2">
-                            <div className="w-3 h-3 bg-red-500 rounded-full" />
-                            High
-                          </div>
-                        </SelectItem>
-                        <SelectItem value="medium">
-                          <div className="flex items-center gap-2">
-                            <div className="w-3 h-3 bg-yellow-500 rounded-full" />
-                            Medium
-                          </div>
-                        </SelectItem>
-                        <SelectItem value="low">
-                          <div className="flex items-center gap-2">
-                            <div className="w-3 h-3 bg-green-500 rounded-full" />
-                            Low
-                          </div>
-                        </SelectItem>
-                        <SelectItem value="pending">
-                          <div className="flex items-center gap-2">
-                            <div className="w-3 h-3 bg-gray-500 rounded-full" />
-                            Pending
-                          </div>
-                        </SelectItem>
-                        <SelectItem value="none">
-                          <div className="flex items-center gap-2">
-                            <div className="w-3 h-3 bg-black rounded-full" />
-                            None
-                          </div>
-                        </SelectItem>
-                      </SelectContent>
-                    </Select>}
                 </div>
               </CardContent>
             </Card>
