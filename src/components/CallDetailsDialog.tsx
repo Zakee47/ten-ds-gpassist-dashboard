@@ -16,28 +16,20 @@ interface CallDetailsDialogProps {
   isOpen: boolean;
   onClose: () => void;
   onUpdateStatus: (callId: string, status: 'completed' | 'dropped' | 'pending') => void;
-  onUpdateUrgency: (callId: string, urgency: 'high' | 'medium' | 'low') => void;
 }
 
 export const CallDetailsDialog: React.FC<CallDetailsDialogProps> = ({
   call,
   isOpen,
   onClose,
-  onUpdateStatus,
-  onUpdateUrgency
+  onUpdateStatus
 }) => {
   const [isEditingStatus, setIsEditingStatus] = useState(false);
-  const [isEditingUrgency, setIsEditingUrgency] = useState(false);
   const [isTranscriptCollapsed, setIsTranscriptCollapsed] = useState(true);
 
   const handleUpdateStatus = (callId: string, newStatus: 'completed' | 'dropped' | 'pending') => {
     onUpdateStatus(callId, newStatus);
     setIsEditingStatus(false);
-  };
-
-  const handleUpdateUrgency = (callId: string, newUrgency: 'high' | 'medium' | 'low') => {
-    onUpdateUrgency(callId, newUrgency);
-    setIsEditingUrgency(false);
   };
 
   if (!call) return null;
@@ -113,37 +105,6 @@ export const CallDetailsDialog: React.FC<CallDetailsDialogProps> = ({
                           <div className="flex items-center gap-2">
                             <Clock className="w-4 h-4 text-yellow-600" />
                             Pending
-                          </div>
-                        </SelectItem>
-                      </SelectContent>
-                    </Select>}
-                </div>
-                <div className="flex items-center gap-2">
-                  {getPriorityIcon(call.priority)}
-                  <span className="capitalize">{call.priority} Urgency</span>
-                  {!isEditingUrgency ? <Button variant="ghost" size="sm" onClick={() => setIsEditingUrgency(true)} className="ml-2 h-6 px-2">
-                      <Edit3 className="h-3 w-3" />
-                    </Button> : <Select value={call.priority} onValueChange={(value: 'high' | 'medium' | 'low') => handleUpdateUrgency(call.id, value)}>
-                      <SelectTrigger className="ml-2 h-6 w-32">
-                        <SelectValue />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="high">
-                          <div className="flex items-center gap-2">
-                            <div className="w-3 h-3 bg-red-500 rounded-full" />
-                            High Urgency
-                          </div>
-                        </SelectItem>
-                        <SelectItem value="medium">
-                          <div className="flex items-center gap-2">
-                            <div className="w-3 h-3 bg-yellow-500 rounded-full" />
-                            Medium Urgency
-                          </div>
-                        </SelectItem>
-                        <SelectItem value="low">
-                          <div className="flex items-center gap-2">
-                            <div className="w-3 h-3 bg-green-500 rounded-full" />
-                            Low Urgency
                           </div>
                         </SelectItem>
                       </SelectContent>

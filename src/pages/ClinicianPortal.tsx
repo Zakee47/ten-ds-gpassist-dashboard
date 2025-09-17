@@ -61,18 +61,6 @@ const ClinicianPortal = () => {
       setSelectedCall(updatedCall);
     }
   };
-
-  const updateUrgency = (callId: string, newUrgency: 'high' | 'medium' | 'low') => {
-    setCallLogs(prevLogs => prevLogs.map(call => {
-      if (call.id === callId) {
-        return { ...call, priority: newUrgency };
-      }
-      return call;
-    }));
-    if (selectedCall && selectedCall.id === callId) {
-      setSelectedCall({ ...selectedCall, priority: newUrgency });
-    }
-  };
   const filteredCalls = callLogs.filter(call => {
     const matchesSearch = call.patientName.toLowerCase().includes(searchTerm.toLowerCase()) || call.nhsNumber.includes(searchTerm) || call.callerId.includes(searchTerm);
     const matchesPriority = priorityFilter === 'all' || call.priority === priorityFilter;
@@ -101,7 +89,7 @@ const ClinicianPortal = () => {
           </CardContent>
         </Card>
 
-        <CallDetailsDialog call={selectedCall} isOpen={!!selectedCall} onClose={() => setSelectedCall(null)} onUpdateStatus={updateStatus} onUpdateUrgency={updateUrgency} />
+        <CallDetailsDialog call={selectedCall} isOpen={!!selectedCall} onClose={() => setSelectedCall(null)} onUpdateStatus={updateStatus} />
       </div>
     </div>;
 };
