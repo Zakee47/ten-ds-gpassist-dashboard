@@ -34,26 +34,26 @@ export const SearchFilters: React.FC<SearchFiltersProps> = ({
       
       <Select value={priorityFilter} onValueChange={setPriorityFilter}>
         <SelectTrigger className="w-[180px]">
-          <SelectValue placeholder="All Priorities" />
+          <SelectValue placeholder="All Urgencies" />
         </SelectTrigger>
         <SelectContent>
-          <SelectItem value="all">All Priorities</SelectItem>
+          <SelectItem value="all">All Urgencies</SelectItem>
           <SelectItem value="high">
             <div className="flex items-center gap-2">
               <div className="w-3 h-3 bg-red-500 rounded-full" />
-              High Priority
+              High Urgency
             </div>
           </SelectItem>
           <SelectItem value="medium">
             <div className="flex items-center gap-2">
               <div className="w-3 h-3 bg-yellow-500 rounded-full" />
-              Medium Priority
+              Medium Urgency
             </div>
           </SelectItem>
           <SelectItem value="low">
             <div className="flex items-center gap-2">
               <div className="w-3 h-3 bg-green-500 rounded-full" />
-              Low Priority
+              Low Urgency
             </div>
           </SelectItem>
         </SelectContent>
