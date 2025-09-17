@@ -225,9 +225,9 @@ export const CallDetailsDialog: React.FC<CallDetailsDialogProps> = ({
                 <CardTitle className="text-lg">Call Transcript</CardTitle>
               </CardHeader>
               <CardContent>
-                <ScrollArea className="max-h-96">
+                <ScrollArea className="h-96">
                   <div className="bg-gray-50 p-4 rounded-lg">
-                    <pre className="whitespace-pre-wrap text-sm text-gray-700 font-mono">
+                    <pre className="whitespace-pre-wrap text-sm text-gray-700 font-mono pr-4">
                       {call.transcript}
                     </pre>
                   </div>
