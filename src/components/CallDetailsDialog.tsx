@@ -165,6 +165,16 @@ export const CallDetailsDialog: React.FC<CallDetailsDialogProps> = ({
             </Card>
           </div>
 
+          {/* Clinical Symptoms */}
+          {call.symptoms.length > 0 && <Card>
+              <CardHeader>
+                <CardTitle className="text-lg">Clinical Symptoms</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <p className="text-gray-700">{call.symptoms.join(', ')}</p>
+              </CardContent>
+            </Card>}
+
           {/* Call Summary */}
           <Card>
             <CardHeader>
@@ -176,16 +186,6 @@ export const CallDetailsDialog: React.FC<CallDetailsDialogProps> = ({
               </ScrollArea>
             </CardContent>
           </Card>
-
-          {/* Clinical Symptoms */}
-          {call.symptoms.length > 0 && <Card>
-              <CardHeader>
-                <CardTitle className="text-lg">Clinical Symptoms</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <p className="text-gray-700">{call.symptoms.join(', ')}</p>
-              </CardContent>
-            </Card>}
 
           {/* Call Transcript */}
           <Collapsible open={!isTranscriptCollapsed} onOpenChange={open => setIsTranscriptCollapsed(!open)}>
